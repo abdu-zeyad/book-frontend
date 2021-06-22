@@ -25,7 +25,7 @@ class App extends React.Component {
     event.preventDefault();
     try {
       const paramsObj = {
-        name: this.state.email,
+        email: this.state.email,
       };
 
       const books = await axios.get(`${this.state.server}/books`, {
@@ -49,9 +49,6 @@ class App extends React.Component {
 
   addBook = async (event) => {
     event.preventDefault();
-    // const catName = event.target.catName.value;
-    // const breed = event.target.catBreed.value;
-    // const ownerName = this.state.name;
 
     const bookFormData = {
       BookName: event.target.bookName.value,
