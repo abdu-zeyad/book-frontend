@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "./Header";
-// import IsLoadingAndError from "./IsLoadingAndError";
 import Footer from "./Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -17,7 +16,6 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          {/* <IsLoadingAndError> */}
           <Header isAuth={isAuthenticated} logoutFunc={logout} />
           <Switch>
             <Route exact path="/">
@@ -32,7 +30,6 @@ class App extends React.Component {
             </Route>
           </Switch>
           <Footer />
-          {/* </IsLoadingAndError> */}
         </Router>
       </>
     );
