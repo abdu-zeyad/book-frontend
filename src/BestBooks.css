@@ -1,0 +1,19 @@
+.jumbotron {
+  margin-bottom: 0;
+}
+
+.modalFormSelect {
+  width: 100%;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  border-radius: 5px;
+  color: grey;
+}
+
+.cards {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}

@@ -2,7 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import "./login.css";
-import LoginButton from "./LoginButton";
+import LoginButton from "./components/LoginButton";
+
 class Login extends React.Component {
   render() {
     return (
@@ -10,7 +11,11 @@ class Login extends React.Component {
         <Card.Body>
           <Card.Title>Log In</Card.Title>
           <Card.Text>Click Below to Log In</Card.Text>
-          <LoginButton />
+          {/* TODO: add a `LoginButton` component here that will log the user in with Auth0 */}
+          <LoginButton
+            isAuth={this.props.isAuth}
+            loginFunc={this.props.loginFunc}
+          />
         </Card.Body>
       </Card>
     );
