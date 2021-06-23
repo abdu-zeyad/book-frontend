@@ -5,6 +5,7 @@ import "./BestBooks.css";
 import axios from "axios";
 import BookFormModal from "./components/BookFormModal";
 // import UpdateCatForm from './UpdateCatForm';
+import UpdateModal from "./components/UpdateModal";
 
 class BestBooks extends React.Component {
   state = {
@@ -81,46 +82,51 @@ class BestBooks extends React.Component {
       });
   };
   //////////////////
-  // updateCat = async (event) => {
-  //   event.preventDefault();
-  //   const catData = {
-  //     catName: event.target.catName.value,
-  //     catBreed: event.target.catBreed.value,
-  //     ownerName: this.state.name,
-  //   };
+  showUpdateModal = (i) => {
+    let bookObj = this.state.data[i];
+    this.setState({
+      updateShow: true,
+      name: bookObj.name,
+      desc: bookObj.desc,
+      status: bookObj.status,
+      id: bookObj._id,
+    });
+  };
 
-  //   let catsData = await axios.put(
-  //     `${this.state.server}/updateCat/${this.state.index}`,
-  //     catData
-  //   );
+  change = (e) => {
+    if (e.target.name === "bookName") {
+      this.setState({ name: e.target.value });
+    } else if (e.target.name === "bookDesc") {
+      this.setState({ desc: e.target.value });
+    } else if (e.target.name === "select") {
+      this.setState({ status: e.target.value });
+    }
+  };
 
-  //   this.setState({
-  //     cats: catsData.data,
-  //   });
+  updateData = (e) => {
+    e.preventDefault();
 
-  //   // console.log(this.cats);
-  // };
+    let id = this.state.id;
+    let serverUrl = process.env.REACT_APP_SERVER;
+    let url = `${serverUrl}/updatebooks/${id}`;
 
-  // showUpdateForm = (idx) => {
-  //   this.setState({
-  //     show: true,
-  //     index: idx,
-  //     catName: this.state.cats[idx].catName,
-  //     catBreed: this.state.cats[idx].breed,
-  //   });
-  // };
+    let updatedData = {
+      email: this.props.userEmail,
+      name: e.target.bookName.value,
+      desc: e.target.bookDesc.value,
+      status: e.target.select.value,
+    };
 
-  // updateCatName = (e) => {
-  //   this.setState({
-  //     catName: e.target.value,
-  //   });
-  // };
+    axios
+      .put(url, updatedData)
+      .then((data) => {
+        this.setState({ data: data.data });
+      })
+      .catch((err) => {
+        this.setState({ err: "There is an error" });
+      });
+  };
 
-  // updateCatBreed = (e) => {
-  //   this.setState({
-  //     catBreed: e.target.value,
-  //   });
-  // };
   // /////////////////////////////
   showModal = () => {
     this.setState({ showModal: true });
@@ -162,14 +168,15 @@ class BestBooks extends React.Component {
           closeFunc={this.closeModal}
           postFunc={this.postData}
         />
-        {/* <UpdateCatForm
-            updateCats={this.updateCat}
-            catName={this.state.catName}
-            catBreed={this.state.catBreed}
-            updateCatNameProps={this.updateCatName}
-            updateCatBreedProps={this.updateCatBreed}
-
-            /> */}
+        <UpdateModal
+          show={this.state.updateShow}
+          closeFunc={this.closeModal}
+          name={this.state.name}
+          desc={this.state.desc}
+          status={this.state.status}
+          changeFunc={this.change}
+          updateFunc={this.updateData}
+        />
       </>
     );
   }
