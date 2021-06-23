@@ -49,7 +49,7 @@ class BestBooks extends React.Component {
       status: e.target.select.value,
     };
 
-    let serverUrl = process.env.REACT_APP_SERVER;
+    let serverUrl = "http://localhost:3001";
     let url = `${serverUrl}/addbooks`;
 
     axios
@@ -60,10 +60,11 @@ class BestBooks extends React.Component {
       .catch((err) => {
         this.setState({ err: "There is an error" });
       });
+    console.log(this.dataobj);
   };
 
   deleteData = (e) => {
-    let serverUrl = process.env.REACT_APP_SERVER;
+    let serverUrl = "http://localhost:3001";
     let id = e.target.name;
     let url = `${serverUrl}/deletebooks/${id}`; // id is params
 
