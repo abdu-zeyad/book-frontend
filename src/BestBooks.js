@@ -4,6 +4,7 @@ import { Button, Card } from "react-bootstrap";
 import "./BestBooks.css";
 import axios from "axios";
 import BookFormModal from "./components/BookFormModal";
+// import UpdateCatForm from './UpdateCatForm';
 
 class BestBooks extends React.Component {
   state = {
@@ -18,8 +19,7 @@ class BestBooks extends React.Component {
 
   getData = () => {
     // get data from express server (get mongodb data)
-    // let serverUrl = process.env.REACT_APP_SERVER;
-    let serverUrl = "http://localhost:3001";
+    let serverUrl = process.env.REACT_APP_SERVER;
 
     let url = `${serverUrl}/books`;
 
@@ -48,8 +48,7 @@ class BestBooks extends React.Component {
       desc: e.target.bookDesc.value,
       status: e.target.select.value,
     };
-
-    let serverUrl = "http://localhost:3001";
+    let serverUrl = process.env.REACT_APP_SERVER;
     let url = `${serverUrl}/addbooks`;
 
     axios
@@ -64,7 +63,7 @@ class BestBooks extends React.Component {
   };
 
   deleteData = (e) => {
-    let serverUrl = "http://localhost:3001";
+    let serverUrl = process.env.REACT_APP_SERVER;
     let id = e.target.name;
     let url = `${serverUrl}/deletebooks/${id}`; // id is params
 
@@ -81,7 +80,48 @@ class BestBooks extends React.Component {
         this.setState({ err: "There is an error" });
       });
   };
+  //////////////////
+  // updateCat = async (event) => {
+  //   event.preventDefault();
+  //   const catData = {
+  //     catName: event.target.catName.value,
+  //     catBreed: event.target.catBreed.value,
+  //     ownerName: this.state.name,
+  //   };
 
+  //   let catsData = await axios.put(
+  //     `${this.state.server}/updateCat/${this.state.index}`,
+  //     catData
+  //   );
+
+  //   this.setState({
+  //     cats: catsData.data,
+  //   });
+
+  //   // console.log(this.cats);
+  // };
+
+  // showUpdateForm = (idx) => {
+  //   this.setState({
+  //     show: true,
+  //     index: idx,
+  //     catName: this.state.cats[idx].catName,
+  //     catBreed: this.state.cats[idx].breed,
+  //   });
+  // };
+
+  // updateCatName = (e) => {
+  //   this.setState({
+  //     catName: e.target.value,
+  //   });
+  // };
+
+  // updateCatBreed = (e) => {
+  //   this.setState({
+  //     catBreed: e.target.value,
+  //   });
+  // };
+  // /////////////////////////////
   showModal = () => {
     this.setState({ showModal: true });
   };
@@ -122,6 +162,14 @@ class BestBooks extends React.Component {
           closeFunc={this.closeModal}
           postFunc={this.postData}
         />
+        {/* <UpdateCatForm
+            updateCats={this.updateCat}
+            catName={this.state.catName}
+            catBreed={this.state.catBreed}
+            updateCatNameProps={this.updateCatName}
+            updateCatBreedProps={this.updateCatBreed}
+
+            /> */}
       </>
     );
   }
