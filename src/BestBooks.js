@@ -18,7 +18,9 @@ class BestBooks extends React.Component {
 
   getData = () => {
     // get data from express server (get mongodb data)
-    let serverUrl = process.env.REACT_APP_SERVER;
+    // let serverUrl = process.env.REACT_APP_SERVER;
+    let serverUrl = "http://localhost:3001";
+
     let url = `${serverUrl}/books`;
 
     let obj = {
@@ -33,6 +35,8 @@ class BestBooks extends React.Component {
       .catch((err) => {
         this.setState({ err: "There is no books" });
       });
+    console.log(url);
+    console.log(this.state.data);
   };
 
   postData = (e) => {
