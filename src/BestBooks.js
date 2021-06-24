@@ -4,7 +4,6 @@ import { Button, Card } from "react-bootstrap";
 import "./BestBooks.css";
 import axios from "axios";
 import BookFormModal from "./components/BookFormModal";
-// import UpdateCatForm from './UpdateCatForm';
 import UpdateModal from "./components/UpdateModal";
 
 class BestBooks extends React.Component {
@@ -12,6 +11,12 @@ class BestBooks extends React.Component {
     data: [],
     err: "",
     showModal: false,
+    updateShow: false,
+    //for update modal:
+    name: "",
+    desc: "",
+    status: "",
+    id: "",
   };
 
   componentDidMount() {
@@ -21,7 +26,6 @@ class BestBooks extends React.Component {
   getData = () => {
     // get data from express server (get mongodb data)
     let serverUrl = process.env.REACT_APP_SERVER;
-
     let url = `${serverUrl}/books`;
 
     let obj = {
@@ -36,8 +40,6 @@ class BestBooks extends React.Component {
       .catch((err) => {
         this.setState({ err: "There is no books" });
       });
-    console.log(url);
-    console.log(this.state.data);
   };
 
   postData = (e) => {
@@ -49,6 +51,7 @@ class BestBooks extends React.Component {
       desc: e.target.bookDesc.value,
       status: e.target.select.value,
     };
+
     let serverUrl = process.env.REACT_APP_SERVER;
     let url = `${serverUrl}/addbooks`;
 
@@ -60,7 +63,6 @@ class BestBooks extends React.Component {
       .catch((err) => {
         this.setState({ err: "There is an error" });
       });
-    console.log(this.dataobj);
   };
 
   deleteData = (e) => {
@@ -81,7 +83,7 @@ class BestBooks extends React.Component {
         this.setState({ err: "There is an error" });
       });
   };
-  //////////////////
+
   showUpdateModal = (i) => {
     let bookObj = this.state.data[i];
     this.setState({
@@ -127,13 +129,12 @@ class BestBooks extends React.Component {
       });
   };
 
-  // /////////////////////////////
   showModal = () => {
     this.setState({ showModal: true });
   };
 
   closeModal = () => {
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, updateShow: false });
   };
 
   render() {
@@ -155,6 +156,12 @@ class BestBooks extends React.Component {
                   >
                     Delete
                   </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => this.showUpdateModal(i)}
+                  >
+                    Update
+                  </Button>
                 </Card.Body>
                 <Card.Footer className="text-muted">{book.status}</Card.Footer>
               </Card>
@@ -162,12 +169,14 @@ class BestBooks extends React.Component {
           })}
         </div>
 
-        {/* modal */}
+        {/* add book modal */}
         <BookFormModal
           show={this.state.showModal}
           closeFunc={this.closeModal}
           postFunc={this.postData}
         />
+
+        {/* update model */}
         <UpdateModal
           show={this.state.updateShow}
           closeFunc={this.closeModal}
