@@ -24,7 +24,6 @@ class BestBooks extends React.Component {
   }
 
   getData = () => {
-    // get data from express server (get mongodb data)
     let serverUrl = process.env.REACT_APP_SERVER;
     let url = `${serverUrl}/books`;
 
@@ -68,14 +67,14 @@ class BestBooks extends React.Component {
   deleteData = (e) => {
     let serverUrl = process.env.REACT_APP_SERVER;
     let id = e.target.name;
-    let url = `${serverUrl}/deletebooks/${id}`; // id is params
+    let url = `${serverUrl}/deletebooks/${id}`;
 
     let dataObj = {
       email: this.props.userEmail,
     };
 
     axios
-      .delete(url, { params: dataObj }) // email is query
+      .delete(url, { params: dataObj })
       .then((data) => {
         this.setState({ data: data.data });
       })
@@ -169,14 +168,12 @@ class BestBooks extends React.Component {
           })}
         </div>
 
-        {/* add book modal */}
         <BookFormModal
           show={this.state.showModal}
           closeFunc={this.closeModal}
           postFunc={this.postData}
         />
 
-        {/* update model */}
         <UpdateModal
           show={this.state.updateShow}
           closeFunc={this.closeModal}
